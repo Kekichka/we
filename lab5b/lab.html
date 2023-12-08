@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css" />
+    <title>Online Calculator</title>
+</head>
+<body>
+    <div id="calculator-container">
+        <div class="calculator-buttons">
+            <button onclick="showCalculator('triangle1')">Triangle Area by Sides</button>
+            <button onclick="showCalculator('triangle2')">Triangle Area by Sides and Angle</button>
+            <button onclick="showCalculator('triangle3')">Triangle Area by Side and Height</button>
+            <button onclick="showCalculator('triangle4')">Triangle Area by Sides and Circumradius</button>
+            <button onclick="showCalculator('palindrome')">Palindrome Checker</button>
+            <button onclick="showCalculator('anagram')">Anagram Checker</button>
+            <button onclick="showCalculator('fibonacci1')">Fibonacci Number Finder</button>
+            <button onclick="showCalculator('fibonacci2')">Fibonacci Sequence Checker</button>
+        </div>
+
+        <div id="triangle1" class="calculator">
+            <h2>Triangle Area Calculator</h2>
+            <label for="side1_triangle1">Side 1:</label>
+            <input type="number" id="side1_triangle1">
+            <label for="side2_triangle1">Side 2:</label>
+            <input type="number" id="side2_triangle1">
+            <label for="side3_triangle1">Side 3:</label>
+            <input type="number" id="side3_triangle1">
+            <button onclick="calculateTriangleArea('triangle1')">Calculate</button>
+            <p id="result_triangle1"></p>
+        </div>
+
+        <div id="triangle2" class="calculator">
+            <h2>Triangle Area Calculator</h2>
+            <label for="side1_triangle2">Side 1:</label>
+            <input type="number" id="side1_triangle2">
+            <label for="side2_triangle2">Side 2:</label>
+            <input type="number" id="side2_triangle2">
+            <label for="angle_triangle2">Angle (in degrees):</label>
+            <input type="number" id="angle_triangle2">
+            <button onclick="calculateTriangleAreaBySidesAndAngle('triangle2')">Calculate</button>
+            <p id="result_triangle2"></p>
+        </div>
+
+        <div id="triangle3" class="calculator">
+            <h2>Triangle Area Calculator</h2>
+            <label for="side_triangle3">Side of the Triangle:</label>
+            <input type="number" id="side_triangle3">
+            <label for="height_triangle3">Height of the Triangle:</label>
+            <input type="number" id="height_triangle3">
+            <button onclick="calculateTriangleAreaBySideAndHeight('triangle3')">Calculate</button>
+            <p id="result_triangle3"></p>
+        </div>
+
+        <div id="triangle4" class="calculator">
+            <h2>Triangle Area Calculator</h2>
+            <label for="side1_triangle4">Side 1:</label>
+            <input type="number" id="side1_triangle4">
+            <label for="side2_triangle4">Side 2:</label>
+            <input type="number" id="side2_triangle4">
+            <label for="side3_triangle4">Side 3:</label>
+            <input type="number" id="side3_triangle4">
+            <label for="radius_triangle4">Radius of Circumcircle:</label>
+            <input type="number" id="radius_triangle4">
+            <button onclick="calculateTriangleArea('triangle4')">Calculate</button>
+            <p id="result_triangle4"></p>
+        </div>
+
+        <div id="palindrome" class="calculator">
+            <h2>Palindrome Checker</h2>
+            <label for="number_palindrome">Enter a Number:</label>
+            <input type="number" id="number_palindrome">
+            <button onclick="checkPalindrome()">Check Palindrome</button>
+            <p id="result_palindrome"></p>
+        </div>
+
+        <div id="anagram" class="calculator">
+            <h2>Anagram Checker</h2>
+            <label for="word1_anagram">Enter the First Word:</label>
+            <input type="text" id="word1_anagram">
+            <label for="word2_anagram">Enter the Second Word:</label>
+            <input type="text" id="word2_anagram">
+            <button onclick="checkAnagram()">Check Anagram</button>
+            <p id="result_anagram"></p>
+        </div>
+
+        <div id="fibonacci1" class="calculator">
+            <h2>Fibonacci Number Finder</h2>
+            <label for="number_fibonacci1">Enter the Fibonacci Sequence Index:</label>
+            <input type="number" id="number_fibonacci1">
+            <button onclick="findFibonacciNumber()">Find Fibonacci Number</button>
+            <p id="result_fibonacci1"></p>
+        </div>
+
+        <div id="fibonacci2" class="calculator">
+            <h2>Fibonacci Sequence Checker</h2>
+            <label for="number_fibonacci2">Enter a Number:</label>
+            <input type="number" id="number_fibonacci2">
+            <button onclick="checkFibonacci()">Check Fibonacci</button>
+            <p id="result_fibonacci2"></p>
+        </div>
+    </div>
+
+    <script>
+        function showCalculator(calculatorId) {
+            var calculators = document.querySelectorAll('.calculator');
+            calculators.forEach(calculator => {
+                calculator.style.display = 'none';
+            });
+
+            var selectedCalculator = document.getElementById(calculatorId);
+            if (selectedCalculator) {
+                selectedCalculator.style.display = 'block';
+            }
+        }
+
+        function showCalculator(calculatorId) {
+            var calculators = document.querySelectorAll('.calculator');
+            calculators.forEach(calculator => {
+                calculator.style.display = 'none';
+            });
+
+            var selectedCalculator = document.getElementById(calculatorId);
+            if (selectedCalculator) {
+                selectedCalculator.style.display = 'block';
+            }
+        }
+
+        function calculateTriangleArea(calculatorId) {
+            var side1 = parseFloat(document.getElementById('side1_' + calculatorId).value);
+            var side2 = parseFloat(document.getElementById('side2_' + calculatorId).value);
+            var side3 = parseFloat(document.getElementById('side3_' + calculatorId).value);
+
+            var s = (side1 + side2 + side3) / 2;
+            var area = Math.sqrt(s * (s - side1) * (s - side2) * (s - side3));
+
+            var resultElement = document.getElementById('result_' + calculatorId);
+            if (!isNaN(area) && area > 0) {
+                resultElement.textContent = 'Triangle Area: ' + area.toFixed(2);
+            } else {
+                resultElement.textContent = 'Invalid input. Please enter valid side lengths.';
+            }
+        }
+
+        function calculateTriangleAreaBySidesAndAngle(calculatorId) {
+            var side1 = parseFloat(document.getElementById('side1_' + calculatorId).value);
+            var side2 = parseFloat(document.getElementById('side2_' + calculatorId).value);
+            var angle = parseFloat(document.getElementById('angle_' + calculatorId).value);
+
+            var angleInRadians = (angle * Math.PI) / 180;
+
+            var area = (side1 * side2 * Math.sin(angleInRadians)) / 2;
+
+            var resultElement = document.getElementById('result_' + calculatorId);
+            if (!isNaN(area) && area > 0) {
+                resultElement.textContent = 'Triangle Area: ' + area.toFixed(2);
+            } else {
+                resultElement.textContent = 'Invalid input. Please enter valid side lengths and angle.';
+            }
+        }
+
+        function calculateTriangleAreaBySideAndHeight(calculatorId) {
+            var side = parseFloat(document.getElementById('side_' + calculatorId).value);
+            var height = parseFloat(document.getElementById('height_' + calculatorId).value);
+
+            var area = (side * height) / 2;
+
+            var resultElement = document.getElementById('result_' + calculatorId);
+            if (!isNaN(area) && area > 0) {
+                resultElement.textContent = 'Triangle Area: ' + area.toFixed(2);
+            } else {
+                resultElement.textContent = 'Invalid input. Please enter valid side length and height.';
+            }
+        }
+        function calculateTriangleAreaBySidesAndCircumradius(calculatorId) {
+            var side1 = parseFloat(document.getElementById('side1_' + calculatorId).value);
+            var side2 = parseFloat(document.getElementById('side2_' + calculatorId).value);
+            var side3 = parseFloat(document.getElementById('side3_' + calculatorId).value);
+            var radius = parseFloat(document.getElementById('radius_' + calculatorId).value);
+
+            var s = (side1 + side2 + side3) / 2;
+            var area = (side1 * side2 * side3) / (4 * radius);
+
+            var resultElement = document.getElementById('result_' + calculatorId);
+            if (!isNaN(area) && area > 0) {
+                resultElement.textContent = 'Triangle Area: ' + area.toFixed(2);
+            } else {
+                resultElement.textContent = 'Invalid input. Please enter valid side lengths and radius.';
+            }
+        }
+
+        function checkPalindrome() {
+            var number = document.getElementById('number_palindrome').value;
+            var reversedNumber = number.split('').reverse().join('');
+
+            var resultElement = document.getElementById('result_palindrome');
+            if (number === reversedNumber) {
+                resultElement.textContent = number + ' is a palindrome.';
+            } else {
+                resultElement.textContent = number + ' is not a palindrome.';
+            }
+        }
+
+        function checkAnagram() {
+            var word1 = document.getElementById('word1_anagram').value.toLowerCase();
+            var word2 = document.getElementById('word2_anagram').value.toLowerCase();
+
+            var sortedWord1 = word1.split('').sort().join('');
+            var sortedWord2 = word2.split('').sort().join('');
+
+            var resultElement = document.getElementById('result_anagram');
+            if (sortedWord1 === sortedWord2) {
+                resultElement.textContent = 'Anagram: ' + word1 + ' and ' + word2;
+            } else {
+                resultElement.textContent = 'Not an Anagram: ' + word1 + ' and ' + word2;
+            }
+        }
+
+        function findFibonacciNumber() {
+            var index = parseInt(document.getElementById('number_fibonacci1').value);
+
+            if (isNaN(index) || index < 1) {
+                document.getElementById('result_fibonacci1').textContent = 'Invalid input. Please enter a positive integer.';
+                return;
+            }
+
+            var fibonacciNumbers = [0, 1];
+            for (var i = 2; i <= index; i++) {
+                fibonacciNumbers[i] = fibonacciNumbers[i - 1] + fibonacciNumbers[i - 2];
+            }
+
+            document.getElementById('result_fibonacci1').textContent = 'Fibonacci Number at Index ' + index + ': ' + fibonacciNumbers[index];
+        }
+
+        function isPerfectSquare(num) {
+            var sqrt = Math.sqrt(num);
+            return sqrt === Math.floor(sqrt);
+        }
+
+        function isFibonacci(number) {
+            return isPerfectSquare(5 * number * number + 4) || isPerfectSquare(5 * number * number - 4);
+        }
+
+        function checkFibonacci() {
+            var inputNumber = parseInt(document.getElementById('number_fibonacci2').value);
+
+            if (isNaN(inputNumber) || inputNumber < 0) {
+                document.getElementById('result_fibonacci2').textContent = 'Invalid input. Please enter a non-negative integer.';
+                return;
+            }
+
+            if (isFibonacci(inputNumber)) {
+                document.getElementById('result_fibonacci2').textContent = inputNumber + ' belongs to the Fibonacci sequence.';
+            } else {
+                document.getElementById('result_fibonacci2').textContent = inputNumber + ' does not belong to the Fibonacci sequence.';
+            }
+        }
+    </script>
+</body>
+</html>

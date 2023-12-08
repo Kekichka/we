@@ -1,48 +1,43 @@
+let currentIndex = 0;
+const sliderItemNodes = document.querySelectorAll('.slider-item');
+const intervalDuration = 2000;
+let intervalId;
+
+const updateSlider = () => {
+  const selectedNode = document.querySelector('.selected');
+  selectedNode.classList.remove('selected');
+  sliderItemNodes[currentIndex].classList.add('selected');
+};
+
 const clickLeft = () => {
-    const sliderItemNodes = document.getElementsByClassName('slider-item');
-    
-    let prevIndex = null;
-    for (let i = 0; i < sliderItemNodes.length; i += 1) {
-      if (sliderItemNodes[i].classList.contains('selected')) {
-        prevIndex = i - 1;
-        if (prevIndex === -1) {
-          prevIndex = sliderItemNodes.length - 1;
-        }
-      }
-    }
-    
-    const [selectedNode] = document.getElementsByClassName('selected');
-     
-    selectedNode.classList.toggle('selected');
-    sliderItemNodes[prevIndex].classList.toggle('selected');
-  };
-  
-  const clickRight = () => {
-    const sliderItemNodes = document.getElementsByClassName('slider-item');
-    
-    let prevIndex = null;
-    for (let i = 0; i < sliderItemNodes.length; i += 1) {
-      if (sliderItemNodes[i].classList.contains('selected')) {
-        prevIndex = i + 1;
-        if (prevIndex === sliderItemNodes.length) {
-          prevIndex = 0;
-        }
-      }
-    }
-    
-    const [selectedNode] = document.getElementsByClassName('selected');
-     
-    selectedNode.classList.toggle('selected');
-    sliderItemNodes[prevIndex].classList.toggle('selected');
-  };
-  
-  setInterval(clickLeft, 2000);
-  
-  document.getElementById('left')
-    .addEventListener('click', clickLeft);
-  
-  document.getElementById('right')
-    .addEventListener('click', clickRight);
-  
+  currentIndex = (currentIndex - 1 + sliderItemNodes.length) % sliderItemNodes.length;
+  updateSlider();
+};
+
+const clickRight = () => {
+  currentIndex = (currentIndex + 1) % sliderItemNodes.length;
+  updateSlider();
+};
+
+const startAutomaticSlideshow = () => {
+  intervalId = setInterval(clickRight, intervalDuration);
+};
+
+const stopAutomaticSlideshow = () => {
+  clearInterval(intervalId);
+};
+
+startAutomaticSlideshow();
+
+document.getElementById('left').addEventListener('click', () => {
+  stopAutomaticSlideshow();
+  clickLeft();
+});
+
+document.getElementById('right').addEventListener('click', () => {
+  stopAutomaticSlideshow();
+  clickRight();
+});
+
   
 
